@@ -351,7 +351,7 @@ export default class ReactGridLayout extends React.Component<Props, State> {
   onLayoutMaybeChanged(newLayout: Layout, oldLayout: ?Layout) {
     if (!oldLayout) oldLayout = this.state.layout;
 
-    if (!isEqual(oldLayout, newLayout)) {
+    if (this.dragEnterCounter === 0 && !isEqual(oldLayout, newLayout)) {
       this.props.onLayoutChange(newLayout);
     }
   }
@@ -685,9 +685,9 @@ export default class ReactGridLayout extends React.Component<Props, State> {
     // reset gragEnter counter on drop
     this.dragEnterCounter = 0;
 
-    this.removeDroppingPlaceholder();
-
     this.props.onDrop(layout, item, e);
+
+    this.removeDroppingPlaceholder();
   };
 
   render() {
